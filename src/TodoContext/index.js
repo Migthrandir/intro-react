@@ -6,7 +6,7 @@ const TodoContext = React.createContext();
 function TodoProvider(props){
     const {
         item: todos, 
-        saveitem: saveTodos, 
+        saveItem: saveTodos, 
         loading,
         error,
       } = useLocalStorage('TODOS_V1',[]);
@@ -32,6 +32,16 @@ function TodoProvider(props){
   }
 
  
+  const addTodo = (text) => {
+
+    const newTodos = [...todos];
+    newTodos.push({
+      completed: false,
+      text,
+    });
+    saveTodos(newTodos);
+  }
+
   const completeTodo = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text);
     const newTodos = [...todos];
@@ -52,6 +62,7 @@ function TodoProvider(props){
             loading,
             error,
             totalTodos,
+            addTodo,
             completedTodos,
             searchValue,
             setSearchValue,
